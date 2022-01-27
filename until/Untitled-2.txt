@@ -1,0 +1,28 @@
+//Select change
+$("select").on("change", function(){
+        id = this.value;
+         $.ajax({
+              url: 'url',
+              type: 'POST',
+              data: {
+                        id: this.value
+                    },
+        }).done(function(response) {
+                //remove old data
+                $('#fullCalendar').fullCalendar('removeEvents');
+                 
+                //Getting new event json data
+                $("#fullCalendar").fullCalendar('addEventSource', response);
+
+                //Updating new events
+                $('#fullCalendar').fullCalendar('rerenderEvents');
+
+                //getting latest Events
+                //$('#fullCalendar').fullCalendar( 'refetchEvents' );
+
+                //getting latest Resources
+                $('#fullCalendar').fullCalendar( 'refetchResources' );
+            
+
+        });
+    })

@@ -1,0 +1,44 @@
+          //HTML file
+            <!DOCTYPE html>
+            <html>
+            <head> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+            </head>
+            <body>
+
+            <p>Get GPS Location Every 5 seconds</p>
+
+            <p id="coordinates"></p>
+
+            <body onload="getLocation()"> 
+
+            <script>
+            var x = document.getElementById("coordinates");
+
+            function getLocation() {
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+                setInterval(getLocation, 50000);
+              } else { 
+                x.innerHTML = "Geolocation is not supported by this browser.";
+              }
+            }
+
+            function showPosition(position) {
+            $.ajax({
+                    url: "file.php",
+                    type: "post",
+                    data: { lat: position.coords.latitude, long: position.coords.longitude},
+                    success: function (data) {
+                      var dataParsed = JSON.parse(data);
+                      console.log(dataParsed);
+                    }
+                  });
+            }
+            </script>
+
+            </body>
+            </html>
+
+        //Php File
+
